@@ -25,7 +25,8 @@ function getLatAndLon(userCity) {
 };
 
 function getWeatherApi(lat,lon){
-    var requestUrl2 = "https://api.openweathermap.org/data/3.0/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly&appid=18498ae985b8d6f193252af6f0bb056e&units=imperial";
+    var apiKey ="18498ae985b8d6f193252af6f0bb056e"
+    var requestUrl2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly&appid=" + apiKey + "&units=imperial";
 
     $.ajax({
         url: requestUrl2,
@@ -36,16 +37,16 @@ function getWeatherApi(lat,lon){
         $(".card-deck").empty();
         // gets weather icon and append to page
         $(".card-deck").empty();
-        var icon = response.current.weather[0].icon;
+        var icon = response.weather[0].icon;
         var iconImg = $("<img>");
         iconImg.attr("src","https://openweathermap.org/img/wn/" + icon + "@2x.png")
         $("#city").append(iconImg);
         // populates html ID's with the current weather data
-        $("#temp").text("Temperature: " + response.current.temp + "° F");
-        $("#humidity").text("Humidity: " + response.current.humidity + "%");
-        $("#wind").text("Wind: " + response.current.wind_speed + "mph");
+        $("#temp").text("Temperature: " + response.main.temp + "° F");
+        $("#humidity").text("Humidity: " + response.main.humidity + "%");
+        $("#wind").text("Wind: " + response.wind[0] + "mph");
         // displays the html to user
-        $(".current-data").css({"display":"block"});
+        $(".future-data").css({"display":"block"});
     })
 };
 
@@ -62,8 +63,16 @@ function searchBtn() {
 
     getLatAndLon(userInput);
 };
-
+// submit event for when user inputs city in search box
 $("#city-form").submit(function (event) {
     event.preventDefault();
     searchBtn();
 });
+
+//click event listener for when the user clicks on a city in the history list
+$("ul").on("click", "button", function () {
+    cityName = $(this).text();
+    console.log(cityName);
+
+    getLatAndLon();
+})
