@@ -46,7 +46,7 @@ function getWeatherApi(lat,lon){
         $("#humidity").text("Humidity: " + response.main.humidity + "%");
         $("#wind").text("Wind: " + response.wind[0] + "mph");
         // displays the html to user
-        $(".future-data").css({"display":"block"});
+        // $(".current-data").css({"display":"block"});   was not working with display none
     })
 };
 
