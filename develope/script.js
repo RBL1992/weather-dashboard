@@ -73,5 +73,5 @@ $(".previously-searched").on("click", "button", function () {
     cityName = $(this).text();
     console.log(cityName);
 
-    getLatAndLon();
+    getLatAndLon(cityName);
 })
